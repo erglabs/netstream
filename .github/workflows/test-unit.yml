@@ -20,7 +20,7 @@ env:
 
 jobs:
   checkpoint:
-    runs-on: debian-latest
+    runs-on: self-hosted
     name: Check if job prerequisites are valid
     outputs:
       decision: ${{ steps.decision.outputs.value }}
@@ -45,49 +45,27 @@ jobs:
   unit-test:
     name: Unit
     needs: checkpoint
-    runs-on: debian-latest
+    runs-on: self-hosted
     if: ${{ needs.checkpoint.outputs.decision == 'true' }}
 
     steps:
       - name: Checkout source code
         uses: actions/checkout@v2
-
       - name: Install Rust
         uses: actions-rs/toolchain@v1
         with:
-          profile: minimal
+          toolchain: nightly
           override: true
           components: clippy, rustfmt
 
-      # - name: Cache cargo directories
-      #   uses: actions/cache@v2.1.6
-      #   with:
-      #     path: |
-      #       ~/.cargo/registry
-      #       ~/.cargo/git
-      #     key: ${{ runner.os }}-cargo-${{ hashFiles('**/Cargo.lock') }}
-      #     restore-keys: ${{ runner.os }}-cargo-
-
-      # - name: Cache cargo target dir
-      #   uses: actions/cache@v2.1.6
-      #   with:
-      #     path: target
-      #     key: ${{ runner.os }}-cargo-build-target-${{ hashFiles('**/Cargo.lock') }}
-      #     restore-keys: ${{ runner.os }}-cargo-build-target-
-
       - name: Clippy
-        run: find . | grep "\.rs$" | grep -v "\./target/" | xargs touch ; cargo clippy --locked --all-features -- -D warnings
-
+        # run: find . | grep "\.rs$" | grep -v "\./target/" | xargs touch ; cargo clippy --locked --all-features -- -D warnings
+        run: find . | grep "\.rs$" | grep -v "\./target/" | xargs touch ; cargo clippy --all-features -- -D warnings
       - name: Fmt
         uses: actions-rs/cargo@v1
         with:
           command: fmt
           args: -- --check
-
-      # - name: Deny invalid licenses
-      #   uses: EmbarkStudios/cargo-deny-action@v1
-      #   with:
-      #     command: check license
 
       - name: Test
         uses: actions-rs/cargo@v1

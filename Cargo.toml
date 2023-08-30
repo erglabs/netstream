@@ -1,0 +1,34 @@
+[package]
+name = "netstream"
+version = "0.1.0"
+edition = "2021"
+build = "build.rs"
+
+
+[build-dependencies]
+vergen = { version = "8.0.0", features = ["build", "cargo", "git", "gitcl", "rustc", "si"] }
+
+
+[dependencies]
+mio                = { version = "0.8", features = ["net", "os-poll"] }
+env_logger         = { version = "0.9" }
+thiserror          = { version = "1.0.44" }
+anyhow             = { version = "1.0" }
+derivative         = { version = "2.2" }
+clap               = { version = "4.3", features = ["derive"] }
+reedline-repl-rs   = { version = "1.0", features = ["scripts"] }
+s-macro            = { version = "0.1" }
+serde              = { version = "1.0" }
+serde_derive       = { version = "1.0" }
+serde_json         = { version = "1.0" }
+# signal-hook        = { version = "0.3" }
+# sled               = { version = "0.34" }
+tracing            = { version = "0.1" }
+tracing-appender   = { version = "0.2" }
+tracing-attributes = { version = "0.1" }
+tracing-core       = { version = "0.1" }
+tracing-log        = { version = "0.1", features = ["env_logger"] }
+tracing-subscriber = { version = "0.3", features = ["json", "env-filter", "fmt", "std", "registry"] }
+uuid               = { version = "1.3" }
+tokio              = { version = "1.0", features = ["full"] }
+
