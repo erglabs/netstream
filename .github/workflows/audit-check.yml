@@ -14,10 +14,19 @@ on:
 
 jobs:
   check-audit:
-    name: Check
-    runs-on: debian-latest
+    name: Check for vulnerabilities
+    runs-on: self-hosted
     steps:
-      - uses: actions/checkout@v2
-      - uses: actions-rs/audit-check@v1
+      - name: Install Rust
+        uses: actions-rs/toolchain@v1
+        with:
+          toolchain: nightly
+          override: true
+          profile: minimal
+      - name: Get Sources
+        uses: actions/checkout@v2
+      - name: Check for vulnerabilities
+        uses: actions-rs/audit-check@v1
         with:
           token: ${{ secrets.GITHUB_TOKEN }}
+

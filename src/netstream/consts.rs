@@ -1,0 +1,19 @@
+/*
+Copyright (C) 2023 ErgLabs <dev@erglabs.org>.
+
+Licensed under the Apache License, Version 2.0 (the "License");
+you may not use this file except in compliance with the License.
+You may obtain a copy of the License at
+
+        http://www.apache.org/licenses/LICENSE-2.0
+
+Unless required by applicable law or agreed to in writing, software
+distributed under the License is distributed on an "AS IS" BASIS,
+WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+See the License for the specific language governing permissions and
+limitations under the License.
+*/
+
+pub const NETSTREAM_INTERNAL_CAPACITY: usize = 3 * u16::MAX as usize;
+// const NETSTREAM_MAX_FRAME_SIZE: usize = u16::MAX as usize;
+pub const NETSTREAM_EXTERNAL_CAPACITY: usize = 256;

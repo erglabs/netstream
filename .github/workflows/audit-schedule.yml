@@ -6,16 +6,24 @@ on:
 jobs:
   check-audit:
     name: Check
-    runs-on: debian-latest
+    runs-on: self-hosted
     strategy:
       matrix:
         branch:
           - master
           - develop
     steps:
-      - uses: actions/checkout@v2
+      - name: Checkout Source Code      
+        uses: actions/checkout@v2
         with:
           ref: ${{ matrix.branch }}
-      - uses: actions-rs/audit-check@v1
+      - name: Install Rust
+        uses: actions-rs/toolchain@v1
+        with:
+          toolchain: nightly
+          override: true
+          components: clippy, rustfmt
+      - name: Run Audit
+        uses: actions-rs/audit-check@v1
         with:
           token: ${{ secrets.GITHUB_TOKEN }}
